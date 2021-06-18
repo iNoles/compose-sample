@@ -1,0 +1,11 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.DinerTips" parent="Theme.Material.DayNight.NoActionBar">
+        <item name="android:colorPrimary">@color/green_500</item>
+        <item name="android:colorAccent">@color/blue_200</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />
+</resources>
