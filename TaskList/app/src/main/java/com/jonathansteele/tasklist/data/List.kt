@@ -16,13 +16,7 @@
  */
 package com.jonathansteele.tasklist.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
-
-@Entity(indices = [Index(value = ["name"], unique = true)])
 data class List(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo val name: String
+    val id: Int,
+    val name: String
 )

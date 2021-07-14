@@ -46,17 +46,12 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.jonathansteele.tasklist.data.AppDatabase
-import com.jonathansteele.tasklist.data.List
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomePagerTabs(navController: NavHostController) {
-    // TODO: Figure out how to pull this data from database
-    val pages = listOf(
-        List(1, "Personal"),
-        List(2, "Business")
-    )
+    val pages = populateList()
     Scaffold(
         topBar = {
             TopAppBar(

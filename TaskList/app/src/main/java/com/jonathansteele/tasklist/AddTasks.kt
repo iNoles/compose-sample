@@ -62,9 +62,6 @@ fun AddOrEditTask(editMode: Boolean = false, taskId: Int = -1, onBack: () -> Uni
         notes.value = task?.notes.toString()
     }
 
-    val lists = database.listDao().getLists()
-    val listState = lists.collectAsState(initial = emptyList()).value
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -93,7 +90,7 @@ fun AddOrEditTask(editMode: Boolean = false, taskId: Int = -1, onBack: () -> Uni
         Column {
             DropDownList(
                 requestToOpen = isOpen.value,
-                list = listState,
+                list = populateList(),
                 request = { isOpen.value = it },
                 selectedInt = { list.value = it }
             )

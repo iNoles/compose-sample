@@ -28,12 +28,9 @@ import kotlinx.coroutines.launch
 
 @Database(
     version = 1,
-    entities = [List::class, Task::class]
+    entities = [Task::class]
 )
 abstract class AppDatabase : RoomDatabase() {
-    private val repoScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-
-    abstract fun listDao(): ListDao
     abstract fun taskDao(): TaskDao
 
     companion object {
@@ -48,21 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         // Create and pre-populate the database. See this article for more details:
         // https://medium.com/google-developers/7-pro-tips-for-room-fbadea4bfbd1#4785
-        private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, "tasklist.db")
-                .addCallback(
-                    object : RoomDatabase.Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            val database = getInstance(context)
-                            database.repoScope.launch {
-                                database.listDao().insertList(List(1, "Personal"))
-                                database.listDao().insertList(List(2, "Business"))
-                            }
-                        }
-                    }
-                )
-                .build()
-        }
+        private fun buildDatabase(context: Context): AppDatabase =
+            Room.databaseBuilder(context, AppDatabase::class.java, "tasklist.db").build()
     }
 }
