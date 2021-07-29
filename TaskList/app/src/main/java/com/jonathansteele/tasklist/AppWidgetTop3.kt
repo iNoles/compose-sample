@@ -19,14 +19,12 @@ package com.jonathansteele.tasklist
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.app.PendingIntent.getActivity
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.widget.RemoteViews
 import com.jonathansteele.tasklist.data.AppDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -97,10 +95,6 @@ class AppWidgetTop3 : AppWidgetProvider() {
         // Construct an Intent which is pointing this class.
         val intent = Intent(context, MainActivity::class.java)
         // And this time we are sending a broadcast with getBroadcast
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getActivity(context, 0, intent, FLAG_IMMUTABLE)
-        } else {
-            getActivity(context, 0, intent, FLAG_UPDATE_CURRENT)
-        }
+        return getActivity(context, 0, intent, FLAG_IMMUTABLE)
     }
 }
