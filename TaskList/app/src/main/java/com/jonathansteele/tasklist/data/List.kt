@@ -16,7 +16,12 @@
  */
 package com.jonathansteele.tasklist.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class List(
-    val id: Int,
-    val name: String
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo val name: String = ""
 )
