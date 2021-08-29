@@ -2,12 +2,10 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("com.diffplug.spotless") version "5.12.5"
 }
 
 android {
     compileSdk = 31
-    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.jonathansteele.tasklist"
@@ -60,16 +58,6 @@ android {
     }
 }
 
-spotless {
-    kotlin {
-        target("**/*.kt")
-        targetExclude("$buildDir/**/*.kt")
-        targetExclude("bin/**/*.kt")
-        ktlint("0.41.0")
-        licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
-    }
-}
-
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
 
@@ -92,5 +80,4 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["composeVersion"]}")
     debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["composeVersion"]}")
-
 }

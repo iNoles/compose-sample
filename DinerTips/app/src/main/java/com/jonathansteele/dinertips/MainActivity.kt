@@ -168,7 +168,8 @@ fun Tips() {
             modifier = Modifier.constrainAs(goodText) {
                 start.linkTo(secondTipOptions.end)
                 top.linkTo(amazingText.bottom, margin = 16.dp)
-        })
+            }
+        )
 
         RadioButton(
             selected = tipPercentageState.value == .15,

@@ -75,13 +75,16 @@ fun AddOrEditTask(editMode: Boolean = false, taskId: Int = -1, onBack: () -> Uni
                     }) {
                         Icon(
                             imageVector = Icons.Filled.Done,
-                            contentDescription = "Save to DB")
+                            contentDescription = "Save to DB"
+                        )
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Going Back to Home")
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Going Back to Home"
+                        )
                     }
                 }
             )

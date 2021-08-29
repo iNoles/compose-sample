@@ -1,12 +1,10 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("com.diffplug.spotless") version "5.12.5"
 }
 
 android {
     compileSdk = 31
-    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.jonathansteele.dinertips"
@@ -42,15 +40,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = rootProject.extra["composeVersion"] as String
-    }
-}
-spotless {
-    kotlin {
-        target("**/*.kt")
-        targetExclude("$buildDir/**/*.kt")
-        targetExclude("bin/**/*.kt")
-        ktlint("0.41.0")
-        licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
     }
 }
 

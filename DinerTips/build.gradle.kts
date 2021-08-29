@@ -14,6 +14,24 @@ buildscript {
     }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+plugins {
+    id("com.diffplug.spotless") version "5.14.3"
+}
+
+subprojects {
+    apply(plugin="com.diffplug.spotless")
+
+    spotless {
+        kotlin {
+            target("**/*.kt")
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude("bin/**/*.kt")
+            ktlint("0.42.1")
+            licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
+        }
+        kotlinGradle {
+            target("*.gradle.kts") // default target for kotlinGradle
+            ktlint() // or ktfmt() or prettier()
+        }
+    }
 }
