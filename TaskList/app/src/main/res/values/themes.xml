@@ -8,7 +8,4 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <!-- Status bar color. -->
     </style>
-
-    <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />
-
 </resources>
