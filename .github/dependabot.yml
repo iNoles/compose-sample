@@ -10,14 +10,6 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/DinerTips/app" # Location of package manifests
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/TaskList" # Location of package manifests
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/TaskList/app" # Location of package manifests
     schedule:
       interval: "daily"
