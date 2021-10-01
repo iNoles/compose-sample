@@ -74,7 +74,7 @@ fun HomePagerTabs(navController: NavHostController) {
         }
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            val pagerState = rememberPagerState(pageCount = pages.size)
+            val pagerState = rememberPagerState()
             val coroutineScope = rememberCoroutineScope()
             TabRow(
                 // Our selected tab is our current page
@@ -97,7 +97,7 @@ fun HomePagerTabs(navController: NavHostController) {
                     )
                 }
             }
-            HorizontalPager(state = pagerState) { page ->
+            HorizontalPager(state = pagerState, count = 2) { page ->
                 PagerContent(listId = page + 1, navController)
             }
         }
