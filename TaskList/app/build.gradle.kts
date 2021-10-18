@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.room:room-ktx:${rootProject.extra["roomVersion"]}")
     kapt("androidx.room:room-compiler:${rootProject.extra["roomVersion"]}")
 
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.19.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.20.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
