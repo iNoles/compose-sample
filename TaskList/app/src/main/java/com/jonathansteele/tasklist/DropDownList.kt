@@ -18,14 +18,13 @@ package com.jonathansteele.tasklist
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.jonathansteele.tasklist.data.List
 import kotlin.collections.List as KList
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DropDownList(
     requestToOpen: Boolean = false,
@@ -33,10 +32,10 @@ fun DropDownList(
     request: (Boolean) -> Unit,
     selectedInt: (Int) -> Unit
 ) {
-    DropdownMenu(
+    ExposedDropdownMenuBox(
         modifier = Modifier.fillMaxWidth(),
         expanded = requestToOpen,
-        onDismissRequest = { request(false) },
+        onExpandedChange = { request(false) }
     ) {
         list.forEach {
             DropdownMenuItem(

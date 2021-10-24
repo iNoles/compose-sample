@@ -25,13 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -65,6 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Tips() {
     val billAmountTextState = remember { mutableStateOf(TextFieldValue()) }
@@ -74,7 +69,7 @@ fun Tips() {
     val dropdownItemState = remember { mutableStateOf(1) }
     val focusManager = LocalFocusManager.current
     ConstraintLayout(modifier = Modifier.padding(16.dp)) {
-        // Create references for the composables to constrain
+        // Create references for the composable to constrain
         val (
             roomIcon,
             outfieldText,
@@ -246,9 +241,9 @@ fun Tips() {
             }
         )
 
-        DropdownMenu(
+        ExposedDropdownMenuBox(
             expanded = dropdownExpanded.value,
-            onDismissRequest = { dropdownExpanded.value = false },
+            onExpandedChange = { dropdownExpanded.value = false },
             modifier = Modifier.fillMaxWidth().constrainAs(splitMenu) {
                 start.linkTo(splitTip.end)
                 top.linkTo(roundingTotal.bottom, margin = 16.dp)
