@@ -40,7 +40,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavHostController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -50,19 +49,18 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomePagerTabs(navController: NavHostController) {
-    val pages = populateList()
+fun HomePagerTabs(addButton: () -> Unit, editButton: (Int) -> Unit) {
+    val context = LocalContext.current
+    val database = AppDatabase.getInstance(context)
+    val lists = database.listDao().getLists()
+    val pages = lists.collectAsState(initial = emptyList()).value
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Task List") },
                 actions = {
                     IconButton(
-                        onClick = {
-                            navController.navigate("add") {
-                                popUpTo("home")
-                            }
-                        }
+                        onClick = addButton
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Add,
@@ -98,7 +96,7 @@ fun HomePagerTabs(navController: NavHostController) {
                 }
             }
             HorizontalPager(state = pagerState, count = 2) { page ->
-                PagerContent(listId = page + 1, navController)
+                PagerContent(listId = page + 1, editButton)
             }
         }
     }
@@ -106,7 +104,7 @@ fun HomePagerTabs(navController: NavHostController) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PagerContent(listId: Int, navController: NavHostController) {
+fun PagerContent(listId: Int, editButton: (Int) -> Unit) {
     val context = LocalContext.current
     val taskDao = AppDatabase.getInstance(context).taskDao()
     val tasks = taskDao.getTasks(listId)
@@ -117,7 +115,7 @@ fun PagerContent(listId: Int, navController: NavHostController) {
             ListItem(
                 modifier = Modifier.clickable
                 {
-                    navController.navigate("edit/${task.listId}")
+                    editButton(task.listId)
                 },
                 text = { Text(text = task.name) },
                 secondaryText = { Text(text = task.notes) },

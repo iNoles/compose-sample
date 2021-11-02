@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-val composeVersion = "1.1.0-alpha06"
+val composeVersion = "1.1.0-beta01"
 
 android {
     compileSdk = 31
@@ -63,10 +63,10 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
-    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-ktx:1.7.0")
 
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.navigation:navigation-compose:2.4.0-beta01")
 
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
@@ -75,7 +75,11 @@ dependencies {
     implementation("androidx.room:room-ktx:2.4.0-beta01")
     kapt("androidx.room:room-compiler:2.4.0-beta01")
 
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.20.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.21.0-beta")
+
+    val glanceVersion = "1.0.0-SNAPSHOT"
+    implementation("androidx.glance:glance-appwidget:$glanceVersion")
+    implementation("androidx.glance:glance:$glanceVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

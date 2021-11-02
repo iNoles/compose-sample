@@ -54,7 +54,16 @@ fun MainScreen() {
 fun AppNavigationController(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            HomePagerTabs(navController)
+            HomePagerTabs(
+                addButton = {
+                    navController.navigate("add") {
+                        popUpTo("home")
+                    }
+                },
+                editButton = { id ->
+                    navController.navigate("edit/$id")
+                }
+            )
         }
         composable("add") {
             AddOrEditTask(onBack = { navController.navigateUp() })

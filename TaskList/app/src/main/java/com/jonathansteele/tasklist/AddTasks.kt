@@ -52,6 +52,9 @@ fun AddOrEditTask(editMode: Boolean = false, taskId: Int = -1, onBack: () -> Uni
     val tasks = database.taskDao().getTask(taskId)
     val task = tasks.collectAsState(initial = null).value
 
+    val lists = database.listDao().getLists()
+    val populateList = lists.collectAsState(initial = emptyList()).value
+
     val name = remember { mutableStateOf("") }
     val notes = remember { mutableStateOf("") }
     val list = remember { mutableStateOf(1) }
@@ -93,7 +96,7 @@ fun AddOrEditTask(editMode: Boolean = false, taskId: Int = -1, onBack: () -> Uni
         Column {
             DropDownList(
                 requestToOpen = isOpen.value,
-                list = populateList(),
+                list = populateList,
                 request = { isOpen.value = it },
                 selectedInt = { list.value = it }
             )
