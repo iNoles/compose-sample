@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-val composeVersion = "1.1.0-beta01"
+val composeVersion = "1.1.0-beta02"
 
 android {
     compileSdk = 31
@@ -75,7 +75,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.4.0-beta01")
     kapt("androidx.room:room-compiler:2.4.0-beta01")
 
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.21.0-beta")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.21.1-beta")
 
     val glanceVersion = "1.0.0-SNAPSHOT"
     implementation("androidx.glance:glance-appwidget:$glanceVersion")
