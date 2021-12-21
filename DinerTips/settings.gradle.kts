@@ -5,8 +5,8 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id("com.android.application") version "7.1.0-beta02"
-        id("org.jetbrains.kotlin.android") version "1.5.31"
+        id("com.android.application") version "7.1.0-beta05"
+        id("org.jetbrains.kotlin.android") version "1.6.10"
     }
 }
 
@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://androidx.dev/snapshots/latest/artifacts/repository")
     }
 }
 rootProject.name = "Diner Tips"

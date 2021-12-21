@@ -20,16 +20,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -39,9 +37,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstrainedLayoutReference
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.ConstraintLayoutScope
 import com.jonathansteele.dinertips.ui.theme.DinerTipsTheme
 import java.text.NumberFormat
 
@@ -62,203 +57,103 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Tips() {
-    val billAmountTextState = remember { mutableStateOf(TextFieldValue()) }
-    val tipPercentageState = remember { mutableStateOf(.20) }
-    val roundingOptionsState = remember { mutableStateOf(0) }
-    val dropdownExpanded = remember { mutableStateOf(false) }
-    val dropdownItemState = remember { mutableStateOf(1) }
+    var billAmountTextState by remember { mutableStateOf(TextFieldValue()) }
+    var tipPercentageState by remember { mutableStateOf("Amazing") }
+    var roundingOptionsState by remember { mutableStateOf("None") }
+    var dropdownExpanded by remember { mutableStateOf(false) }
+    var dropdownItemState by remember { mutableStateOf(1) }
     val focusManager = LocalFocusManager.current
-    ConstraintLayout(modifier = Modifier.padding(16.dp)) {
-        // Create references for the composable to constrain
-        val (
-            roomIcon,
-            outfieldText,
-            storeIcon,
-            serviceText,
-            firstTipOptions,
-            amazingText,
-            secondTipOptions,
-            goodText,
-            thirdTipOptions,
-            okayText,
-            callIcon,
-            roundingText,
-            roundingNone,
-            roundingTip,
-            roundingTotal,
-            splitTip,
-        ) = createRefs()
 
-        val splitMenu = createRef()
+    val tipPercentageOptions = listOf("Amazing", "Good", "Okay")
+    val roundingOptions = listOf("None", "Tip", "Total")
 
-        Image(
-            painter = painterResource(id = R.drawable.ic_baseline_room_service_24),
-            contentDescription = "Room Service Icon",
-            modifier = Modifier.padding(top = 26.dp, end = 16.dp).constrainAs(roomIcon) {
-                top.linkTo(parent.top)
-            }
-        )
-
-        OutlinedTextField(
-            value = billAmountTextState.value,
-            onValueChange = { billAmountTextState.value = it },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-            ),
-            singleLine = true,
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    focusManager.clearFocus()
-                }
-            ),
-            label = { Text("Cost of Service") },
-            modifier = Modifier.constrainAs(outfieldText) {
-                start.linkTo(roomIcon.end)
-            }
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.ic_baseline_store_24),
-            contentDescription = "Store Icon",
-            modifier = Modifier.constrainAs(storeIcon) {
-                top.linkTo(outfieldText.bottom, margin = 16.dp)
-            }
-        )
-
-        Text(
-            text = "How was the service?",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.constrainAs(serviceText) {
-                start.linkTo(storeIcon.end, margin = 8.dp)
-                top.linkTo(outfieldText.bottom, margin = 16.dp)
-            }
-        )
-
-        RadioButton(
-            selected = tipPercentageState.value == .20,
-            onClick = { tipPercentageState.value = .20 },
-            modifier = Modifier.constrainAs(firstTipOptions) {
-                top.linkTo(serviceText.bottom, margin = 16.dp)
-            }
-        )
-
-        Text(
-            text = "Amazing (20%)",
-            modifier = Modifier.constrainAs(amazingText) {
-                start.linkTo(firstTipOptions.end)
-                top.linkTo(serviceText.bottom, margin = 15.dp)
-            }
-        )
-
-        RadioButton(
-            selected = tipPercentageState.value == .18,
-            onClick = { tipPercentageState.value = .18 },
-            modifier = Modifier.constrainAs(secondTipOptions) {
-                top.linkTo(firstTipOptions.bottom, margin = 16.dp)
-            }
-        )
-        Text(
-            text = "Good (18%)",
-            modifier = Modifier.constrainAs(goodText) {
-                start.linkTo(secondTipOptions.end)
-                top.linkTo(amazingText.bottom, margin = 16.dp)
-            }
-        )
-
-        RadioButton(
-            selected = tipPercentageState.value == .15,
-            onClick = { tipPercentageState.value = .15 },
-            modifier = Modifier.constrainAs(thirdTipOptions) {
-                top.linkTo(secondTipOptions.bottom, margin = 16.dp)
-            }
-        )
-        Text(
-            text = "Okay (15%)",
-            modifier = Modifier.constrainAs(okayText) {
-                start.linkTo(thirdTipOptions.end)
-                top.linkTo(goodText.bottom, margin = 16.dp)
-            }
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.ic_baseline_call_made_24),
-            contentDescription = "Call Icon",
-            modifier = Modifier.constrainAs(callIcon) {
-                top.linkTo(thirdTipOptions.bottom, margin = 16.dp)
-            }
-        )
-        Text(
-            text = "Rounding",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.constrainAs(roundingText) {
-                start.linkTo(callIcon.end, margin = 8.dp)
-                top.linkTo(thirdTipOptions.bottom, margin = 16.dp)
-            }
-        )
-
-        Row(
-            modifier = Modifier.constrainAs(roundingNone) {
-                top.linkTo(roundingText.bottom, 16.dp)
-            }
-        ) {
-            RadioButton(
-                selected = roundingOptionsState.value == 0,
-                onClick = { roundingOptionsState.value = 0 },
+    Column {
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.ic_baseline_store_24),
+                contentDescription = "Store Icon",
+                modifier = Modifier.padding(top = 26.dp, end = 16.dp)
             )
-            Text(text = "None")
-        }
-        Row(
-            modifier = Modifier.constrainAs(roundingTip) {
-                top.linkTo(roundingNone.bottom, 16.dp)
-            }
-        ) {
-            RadioButton(
-                selected = roundingOptionsState.value == 1,
-                onClick = { roundingOptionsState.value = 1 },
+
+            OutlinedTextField(
+                value = billAmountTextState,
+                onValueChange = { billAmountTextState = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                ),
+                label = { Text("Cost of Service") },
             )
-            Text(text = "Tip")
         }
-        Row(
-            modifier = Modifier.constrainAs(roundingTotal) {
-                top.linkTo(roundingTip.bottom, 16.dp)
-            }
-        ) {
-            RadioButton(
-                selected = roundingOptionsState.value == 2,
-                onClick = { roundingOptionsState.value = 2 },
+
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.ic_baseline_room_service_24),
+                contentDescription = "Room Service Icon",
+                modifier = Modifier.padding(end = 16.dp)
             )
-            Text(text = "Total")
+
+            Text(
+                text = "How was the service?",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+            )
         }
+        
+        RadioGroup(
+            options = tipPercentageOptions,
+            selected = tipPercentageState,
+            onSelectedChange = { text ->
+                tipPercentageState = text
+            })
+
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.ic_baseline_call_made_24),
+                contentDescription = "Call Icon",
+                modifier = Modifier.padding(end = 16.dp)
+            )
+
+            Text(
+                text = "Rounding",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        RadioGroup(
+            options = roundingOptions,
+            selected = roundingOptionsState,
+            onSelectedChange = { text ->
+                roundingOptionsState = text
+            })
 
         Text(
             text = "Split Tip",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.constrainAs(splitTip) {
-                top.linkTo(roundingTotal.bottom, margin = 16.dp)
-            }
         )
 
         ExposedDropdownMenuBox(
-            expanded = dropdownExpanded.value,
-            onExpandedChange = { dropdownExpanded.value = false },
-            modifier = Modifier.fillMaxWidth().constrainAs(splitMenu) {
-                start.linkTo(splitTip.end)
-                top.linkTo(roundingTotal.bottom, margin = 16.dp)
-            },
+            expanded = dropdownExpanded,
+            onExpandedChange = { dropdownExpanded = false },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            DropdownMenuItem(onClick = { dropdownItemState.value = 1 }) {
+            DropdownMenuItem(onClick = { dropdownItemState = 1 }) {
                 Text(text = "No")
             }
-            DropdownMenuItem(onClick = { dropdownItemState.value = 2 }) {
+            DropdownMenuItem(onClick = { dropdownItemState = 2 }) {
                 Text(text = "2 ways")
             }
-            DropdownMenuItem(onClick = { dropdownItemState.value = 3 }) {
+            DropdownMenuItem(onClick = { dropdownItemState = 3 }) {
                 Text(text = "3 ways")
             }
-            DropdownMenuItem(onClick = { dropdownItemState.value = 4 }) {
+            DropdownMenuItem(onClick = { dropdownItemState = 4 }) {
                 Text(text = "4 ways")
             }
         }
@@ -268,104 +163,72 @@ fun Tips() {
             tipPercentageState,
             roundingOptionsState,
             dropdownItemState,
-            this,
-            splitTip,
         )
     }
 }
 
 @Composable
 private fun CalculateThenDisplay(
-    billAmountTextState: MutableState<TextFieldValue>,
-    tipPercentageState: MutableState<Double>,
-    roundingOptionsState: MutableState<Int>,
-    dropdownItemState: MutableState<Int>,
-    constraintLayoutScope: ConstraintLayoutScope,
-    splitTip: ConstrainedLayoutReference,
+    billAmountTextState: TextFieldValue,
+    tipPercentageState: String,
+    roundingOptionsState: String,
+    dropdownItemState: Int,
 ) {
-    constraintLayoutScope.apply {
-        val tipText = createRef()
-        val currencyTip = createRef()
-        val totalText = createRef()
-        val currencyTotal = createRef()
-        val personText = createRef()
-        val currencyPerson = createRef()
-
-        val cost = if (billAmountTextState.value.text.isEmpty())
-            0.0
-        else
-            billAmountTextState.value.text.toDouble()
-        var tipAmount = 0.0
-        var totalAmount = 0.0
-        when (roundingOptionsState.value) {
-            0 -> {
-                tipAmount = tipPercentageState.value * cost
-                totalAmount = cost + tipAmount
-            }
-            1 -> {
-                tipAmount = kotlin.math.ceil(tipPercentageState.value * cost)
-                totalAmount = cost + tipAmount
-            }
-            2 -> {
-                val tipNotRounded = tipPercentageState.value * cost
-                totalAmount = kotlin.math.ceil(cost + tipNotRounded)
-                tipAmount = totalAmount - cost
-            }
+    val cost = if (billAmountTextState.text.isEmpty())
+        0.0
+    else
+        billAmountTextState.text.toDouble()
+    var tipAmount = 0.0
+    var totalAmount = 0.0
+    val tipPercentage = when(tipPercentageState) {
+        "Good" -> .18
+        "Okay" -> .15
+        else -> .20
+    }
+    when (roundingOptionsState) {
+        "None" -> {
+            tipAmount = tipPercentage * cost
+            totalAmount = cost + tipAmount
         }
-
-        var splitAmount = 0.0
-        var perPersonEnabled = false
-        if (dropdownItemState.value != 1) {
-            splitAmount = totalAmount / dropdownItemState.value
-            perPersonEnabled = true
+        "Tip" -> {
+            tipAmount = kotlin.math.ceil(tipPercentage * cost)
+            totalAmount = cost + tipAmount
         }
-        val currency = NumberFormat.getCurrencyInstance()
+        "Total" -> {
+            val tipNotRounded = tipPercentage * cost
+            totalAmount = kotlin.math.ceil(cost + tipNotRounded)
+            tipAmount = totalAmount - cost
+        }
+    }
+
+    var splitAmount = 0.0
+    var perPersonEnabled = false
+    if (dropdownItemState != 1) {
+        splitAmount = totalAmount / dropdownItemState
+        perPersonEnabled = true
+    }
+    val currency = NumberFormat.getCurrencyInstance()
+    Row {
         Text(
-            text = "Tip",
-            modifier = Modifier.constrainAs(tipText) {
-                top.linkTo(splitTip.bottom, margin = 16.dp)
-            },
+            text = "Tip: ",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
         )
+        Text(text = currency.format(tipAmount))
+    }
+    Row {
         Text(
-            text = currency.format(tipAmount),
-            modifier = Modifier.constrainAs(currencyTip) {
-                start.linkTo(tipText.end, margin = 16.dp)
-                top.linkTo(splitTip.bottom, margin = 16.dp)
-            }
-        )
-
-        Text(
-            text = "Total",
-            modifier = Modifier.constrainAs(totalText) {
-                top.linkTo(tipText.bottom, margin = 16.dp)
-            },
+            text = "Total: ",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        Text(
-            text = currency.format(totalAmount),
-            modifier = Modifier.constrainAs(currencyTotal) {
-                start.linkTo(totalText.end, margin = 16.dp)
-                top.linkTo(tipText.bottom, margin = 16.dp)
-            }
-        )
+        Text(text = currency.format(totalAmount))
+    }
 
-        if (perPersonEnabled) {
-            Text(
-                text = "Per Person",
-                modifier = Modifier.constrainAs(personText) {
-                    top.linkTo(totalText.bottom, margin = 16.dp)
-                }
-            )
-            Text(
-                text = currency.format(splitAmount),
-                modifier = Modifier.constrainAs(currencyPerson) {
-                    start.linkTo(personText.end, margin = 16.dp)
-                    top.linkTo(totalText.bottom, margin = 16.dp)
-                }
-            )
+    if (perPersonEnabled) {
+        Row {
+            Text(text = "Per Person: ")
+            Text(text = currency.format(splitAmount))
         }
     }
 }
