@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-val composeVersion = "1.2.0-SNAPSHOT"
+val composeVersion = "1.2.0-alpha01"
 
 android {
     compileSdk = 31
@@ -58,10 +58,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = composeVersion
     }
+    namespace = "com.jonathansteele.tasklist"
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 
     implementation("androidx.core:core-ktx:1.7.0")
 
@@ -72,8 +73,8 @@ dependencies {
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
 
-    implementation("androidx.room:room-ktx:2.4.0")
-    kapt("androidx.room:room-compiler:2.4.0")
+    implementation("androidx.room:room-ktx:2.4.1")
+    kapt("androidx.room:room-compiler:2.4.1")
 
     implementation("com.google.accompanist:accompanist-pager-indicators:0.22.0-rc")
 

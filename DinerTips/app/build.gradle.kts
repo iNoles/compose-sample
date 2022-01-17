@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val composeVersion = "1.2.0-SNAPSHOT"
+val composeVersion = "1.2.0-alpha01"
 
 android {
     compileSdk = 31
@@ -44,6 +44,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = composeVersion
     }
+    namespace = "com.jonathansteele.dinertips"
 }
 
 dependencies {
