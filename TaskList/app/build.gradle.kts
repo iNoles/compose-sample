@@ -76,7 +76,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.4.1")
     kapt("androidx.room:room-compiler:2.4.1")
 
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.24.2-alpha")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.24.3-alpha")
 
     val glanceVersion = "1.0.0-SNAPSHOT"
     implementation("androidx.glance:glance-appwidget:$glanceVersion")
