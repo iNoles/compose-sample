@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
 
-    implementation("androidx.room:room-ktx:2.4.1")
+    implementation("androidx.room:room-ktx:2.4.2")
     kapt("androidx.room:room-compiler:2.4.2")
 
     implementation("com.google.accompanist:accompanist-pager-indicators:0.24.6-alpha")
