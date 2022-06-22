@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val composeVersion = "1.2.0-rc01"
+val composeVersion = "1.2.0-rc02"
 
 android {
     compileSdk = 31
