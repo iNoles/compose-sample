@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-val composeVersion = "1.2.0-rc02"
+val composeVersion = "1.2.0-rc03"
 
 android {
     compileSdk = 31
