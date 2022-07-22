@@ -6,7 +6,7 @@ pluginManagement {
     }
     plugins {
         id("com.android.application") version "7.2.1"
-        id("org.jetbrains.kotlin.android") version "1.6.20"
+        id("org.jetbrains.kotlin.android") version "1.7.10"
     }
 }
 
